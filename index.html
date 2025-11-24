@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Assessment</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+
+<body class="bg-gray-100 text-gray-800">
+    <!-- Circular Scroll Progress Bar -->
+    <div id="scrollCircle" class="fixed top-20 left-4 z-50 flex items-center justify-center">
+        <svg width="70" height="70" class="relative">
+            <!-- Background circle -->
+            <circle cx="35" cy="35" r="30" stroke="#e5e7eb" stroke-width="4" fill="none" />
+
+            <!-- Progress circle -->
+            <circle id="progressCircle" cx="35" cy="35" r="30" stroke="#3b82f6" stroke-width="4" fill="none"
+                stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="188" />
+        </svg>
+
+        <!-- Percentage text -->
+        <span id="progressText" class="absolute text-sm font-semibold text-gray-700">0%</span>
+    </div>
+
+    <div id="lectureNav" class="fixed top-40 left-20 z-50">
+        <ul class="list-none font-bold text-lg mb-2 space-y-3">
+            <li role="button" tabindex="0" data-index="0" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">1</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 1</span>
+            </li>
+            <li role="button" tabindex="0" data-index="1" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">2</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 2</span>
+            </li>
+            <li role="button" tabindex="0" data-index="2" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">3</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 3</span>
+            </li>
+            <li role="button" tabindex="0" data-index="3" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">4</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 4</span>
+            </li>
+            <li role="button" tabindex="0" data-index="4" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">5</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 5</span>
+            </li>
+            <li role="button" tabindex="0" data-index="5" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">6</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 6</span>
+            </li>
+            <li role="button" tabindex="0" data-index="6" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">7</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 7</span>
+            </li>
+            <li role="button" tabindex="0" data-index="7" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">8</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 8</span>
+            </li>
+            <li role="button" tabindex="0" data-index="8" class="flex items-center space-x-3 cursor-pointer group">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">9</span>
+                <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 9</span>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        (function () {
+            const nav = document.getElementById('lectureNav');
+            const items = nav.querySelectorAll('li[data-index]');
+            const offset = 80;
+
+            document.documentElement.style.scrollBehavior = 'smooth';
+
+            function goToIndex(i) {
+                const cards = document.querySelectorAll('#lectures .card');
+                const card = cards[i];
+                if (!card) return;
+
+                const top = card.getBoundingClientRect().top + window.scrollY - offset;
+
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+
+            items.forEach(item => {
+                const idx = Number(item.getAttribute('data-index'));
+                item.addEventListener('click', () => goToIndex(idx));
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        goToIndex(idx);
+                    }
+                });
+            });
+        })();
+    </script>
+
+
+
+    <style>
+        #progressCircle {
+            transition: stroke-dashoffset 0.1s linear;
+        }
+    </style>
+
+
+    <script>
+        const progressCircle = document.getElementById("progressCircle");
+        const progressText = document.getElementById("progressText");
+        const circleLength = progressCircle.getTotalLength();
+
+        progressCircle.style.strokeDasharray = circleLength;
+
+        window.addEventListener("scroll", () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollTop / docHeight;
+
+            const offset = circleLength - (progress * circleLength);
+            progressCircle.style.strokeDashoffset = offset;
+
+            const percent = Math.round(progress * 100);
+            progressText.textContent = percent + "%";
+        });
+    </script>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-xl flex items-center gap-2" href="#">
+                <span class="inline-block rounded-md bg-blue-100 text-blue-800 px-2 py-1 text-sm font-bold">PS</span>
+                Professional Skills
+            </a>
+            <button id="toggleNavBtn" type="button" class="btn btn-outline-primary ms-auto" aria-controls="lectureNav" aria-expanded="true">
+                Hide Menu
+            </button>
+
+            <script>
+            (function () {
+                const btn = document.getElementById('toggleNavBtn');
+                const lectureNav = document.getElementById('lectureNav');
+                if (!btn || !lectureNav) return;
+
+                btn.addEventListener('click', () => {
+                    const nowHidden = lectureNav.classList.toggle('hidden');
+                    btn.setAttribute('aria-expanded', String(!nowHidden));
+                    btn.textContent = nowHidden ? 'Show Menu' : 'Hide Menu';
+                });
+            })();
+            </script>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="pt-32 pb-20 text-center container">
+        <h1 class="text-4xl font-bold mb-4">Portfolio Assessment</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            This website showcases 9 lectures we learned throughout the semester, summarized and presented in a simple, modern layout.
+        </p>
+    </section>
+
+    <!-- LECTURE CARDS -->
+    <section id="lectures" class="container">
+        <h2 class="text-3xl font-bold mb-10 text-center">Lectures Overview</h2>
+        <div class="w-full max-w-5xl mx-auto flex flex-col gap-6 px-4 "> 
+            <!--card 1 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/Screenshot-2024-11-01-at-11.39.29 AM.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-xl fw-bold">Lecture 1 - Introduction to Professional Skills</h5>
+                    <p class="card-text text-body-secondary text-sm">Lecturer: Mrs. Ishara Weerasinghe</p>
+                    <br>
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">During the lecture, we learned in detail about the concept of professional skills and why they are essential in today’s workplace. Our lecturer explained that professional skills, also known as soft skills or employability skills, are the non-technical abilities that help us to perform effectively in any job environment. 
+                        <br><br>We explored several key skills, including communication, teamwork, critical thinking, problem-solving, adaptability, time management, and leadership. The lecture also highlighted the difference between technical skills, soft skills, and transferable skills, helping us understand how each category contributes to overall job performance.
+                        <br><br>We discussed how employers look for people who not only have technical knowledge but also the ability to work well with others, handle challenges confidently, and adjust to different situations. This session helped us clearly see how these skills shape professionalism and improve our chances of employment and career growth.
+                        <br><br>we learned about personal qualities such as values, beliefs, attitudes, and character. 
+                        <br>
+                        <ul class="list-disc ps-5">
+                            <li>Values are the core principles that guide our behaviour and influence how we make decisions.</li>
+                            <li>Beliefs shape how we view the world and ourselves, affecting the way we approach different situations.</li>
+                            <li>Attitudes determine whether we respond positively or negatively to people or events, influencing our interactions at work.</li>
+                            <li>Character represents our moral and ethical qualities, such as honesty, responsibility, and respect, which create our overall reputation.</li>
+                        </ul>
+                        <br>The lecture helped us see how these qualities work together to build professionalism, influence our behavior, and contribute to success in both personal and professional environments.
+                        <br><br> And finally, Lecturer discussed about the importance of Professional Skills in the workplace such as,
+                        <ul class="list-disc ps-5">
+                            <li>Enhaving Employability</li>
+                            <li>Workplace success</li>
+                            <li>Career Advancement</li>
+                        </ul>
+                            <br><br>
+                    </p>
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 2 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/csm_CV_Writing_e5690ce234.webp" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-xl fw-bold">Lecture 2 - CV Writing</h5>
+                    <p class="card-text text-body-secondary text-sm">Lecturer: Mrs. Ishara Weerasinghe</p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">In this lecture, we learned about the importance of a Curriculum Vitae (CV) and how it serves as a critical tool for job applications. A CV is a complete document that summarizes our education, work experience, skills, achievements, and other qualifications. It is your first opportunity to make a positive impression on potential employers and plays a key role in getting shortlisted for interviews. The lecture emphasized that a well-crafted CV should be clear, concise, visually appealing, and free from errors, as these qualities help it stand out to recruiters and hiring managers.
+
+                    <br><br>We also learned about the importance of tailoring a CV to match the specific job you are applying for. Tailoring involves highlighting the most relevant qualifications, experiences, and skills for the role, whether it is a marketing position, a technical role, or another field. The lecture explained that a tailored CV demonstrates your genuine interest in the role and shows that you have researched the company and understand its needs. Additionally, we learned how researching the company and job description helps identify keywords that can be included in the CV, increasing its chances of passing automated applicant tracking systems (ATS) and catching the attention of employers.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 3 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/1709901302504.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 3 - Cultivating Effective Research Skills</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 4 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/istockphoto-1395317159-612x612.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 4 - Online and Office  Etiquette</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 5 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/360_F_1764961944_7jxYWFy0Mep3IzFAUlT5C5XU8vy0qguW.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 5 - Dining Etiquette</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 6 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/proposal-writing-600x338px.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 6 - Proposal Writing</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 7 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/imotional.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 7 - Emotional Intelligence</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+            <!--card 8 -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/Survival+Challenge.webp" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Lecture 8 - Survival Task</h5>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    
+                    <p class="card-title font-bold">What We Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    
+                    <br>
+
+                    <p class="card-title font-bold">What I Learned</p>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <br>
+
+                    <p class="card-title font-bold">Activities</p>
+
+                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
+                    <span class="badge border border-primary text-primary">New</span>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- FOOTER -->
+    <footer id="footer" class="bg-gray-900 text-white py-6 mt-10">
+        <div class="container text-center">
+            <p class="text-lg font-semibold">Created by M.D. Manitha Sendiv Rodrigo</p>
+            <p class="text-lg">SA24610189</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
