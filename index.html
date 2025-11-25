@@ -10,8 +10,44 @@
 </head>
 
 <style>
-    html {
-        scroll-behavior: smooth;
+    html { scroll-behavior: smooth; }
+
+    :root{
+        --g1: #e6fffa; /* pale teal */
+        --g2: #e0f7ff; /* light cyan */
+        --g3: #f3e8ff; /* soft lavender */
+        --g4: #ffeef0; /* light blush */
+    }
+
+    html, body { height: 100%; }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--g1); /* fallback */
+        background-image: linear-gradient(120deg, var(--g1) 0%, var(--g2) 35%, var(--g3) 65%, var(--g4) 100%);
+        background-size: 200% 200%;
+        background-attachment: fixed;
+        animation: bg-anim 12s ease-in-out infinite;
+        transition: background 300ms linear;
+    }
+
+    /* gentle movement of the gradient */
+    @keyframes bg-anim {
+        0%   { background-position: 0% 50%; }
+        25%  { background-position: 50% 40%; }
+        50%  { background-position: 100% 50%; }
+        75%  { background-position: 50% 60%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* optional subtle overlay to keep text readable */
+    body::before{
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.40), rgba(255,255,255,0.10));
+        mix-blend-mode: normal;
     }
 </style>
 
@@ -24,7 +60,7 @@
                 <circle cx="35" cy="35" r="30" stroke="#e5e7eb" stroke-width="4" fill="none" />
 
                 <!-- Progress circle -->
-                <circle id="progressCircle" cx="35" cy="35" r="30" stroke="#3b82f6" stroke-width="4" fill="none"
+                <circle id="progressCircle" cx="35" cy="35" r="30" stroke="#10b981" stroke-width="4" fill="none"
                     stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="188" />
             </svg>
 
@@ -65,6 +101,10 @@
                 <li role="button" tabindex="0" data-index="7" class="flex items-center space-x-3 cursor-pointer group">
                     <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">8</span>
                     <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Lecture 8</span>
+                </li>
+                <li role="button" tabindex="0" data-index="8" class="flex items-center space-x-3 cursor-pointer group">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold transition-colors duration-150 group-hover:bg-green-500 group-focus:bg-green-600">9</span>
+                    <span class="text-gray-800 transition-colors duration-150 group-hover:text-green-500 group-focus:text-green-600">Food Fest Day</span>
                 </li>
             </ul>
         </div>
@@ -158,11 +198,52 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="pt-32 pb-20 text-center container">
-        <h1 class="text-4xl font-bold mb-4">Portfolio Assessment</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            This website showcases 9 lectures we learned throughout the semester, summarized and presented in a simple, modern layout.
-        </p>
+    <section class="pt-28 pb-16 container">
+        <div class="grid gap-3 md:gap-4 items-center">
+            <div class="text-center mx-auto max-w-3xl">
+                <p class="inline-block text-sm font-semibold text-green-700 bg-green-50 px-3 py-1 rounded-full mb-4">Professional Skills — Semester Summary</p>
+
+                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
+                    Portfolio Assessment
+                </h1>
+
+                <p class="text-lg text-slate-600 max-w-xl mx-auto mb-6">
+                    A concise, modern summary of the nine lectures covered this semester — with notes, activities and a group project. Browse lessons, view activity highlights and thank the lecturers who guided us.
+                </p>
+
+                <ul class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-sm mx-auto mb-6">
+                    <li class="flex items-center gap-3 justify-center">
+                        <span class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center font-semibold text-green-600">9</span>
+                        <div>
+                            <div class="text-sm font-semibold">Lectures</div>
+                            <div class="text-xs text-slate-500">Complete summaries</div>
+                        </div>
+                    </li>
+
+                    <li class="flex items-center gap-3 justify-center">
+                        <span class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center font-semibold text-indigo-600">10+</span>
+                        <div>
+                            <div class="text-sm font-semibold">Activities</div>
+                            <div class="text-xs text-slate-500">Lecture Activities</div>
+                        </div>
+                    </li>
+
+                    <li class="flex items-center gap-3 justify-center">
+                        <span class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center font-semibold text-amber-600">★</span>
+                        <div>
+                            <div class="text-sm font-semibold">Project</div>
+                            <div class="text-xs text-slate-500">Food Stall</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="flex justify-center"></div>
+                    <a href="#lectures" class="btn btn-primary px-4 py-2 d-inline-flex align-items-center" aria-label="Jump to lectures">
+                        Explore Lectures
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- LECTURE CARDS -->
@@ -171,7 +252,7 @@
         <div class="w-full max-w-5xl mx-auto flex flex-col gap-6 px-4 "> 
             <!--card 1 -->
             <div class="card mb-3 rounded-xl shadow">
-                <img src="photos/Screenshot-2024-11-01-at-11.39.29 AM.png" class="card-img-top" alt="...">
+                <img src="photos/ps.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title text-xl fw-bold">Lecture 1 - Introduction to Professional Skills</h5>
                     <p class="card-text text-body-secondary text-sm">Lecturer: Mrs. Ishara Weerasinghe</p>
@@ -182,53 +263,100 @@
                         <br><br>We discussed how employers look for people who not only have technical knowledge but also the ability to work well with others, handle challenges confidently, and adjust to different situations. This session helped us clearly see how these skills shape professionalism and improve our chances of employment and career growth.
                         <br><br>we learned about personal qualities such as values, beliefs, attitudes, and character. 
                         <br>
-                        <ul class="list-disc ps-5">
-                            <li>Values are the core principles that guide our behaviour and influence how we make decisions.</li>
-                            <li>Beliefs shape how we view the world and ourselves, affecting the way we approach different situations.</li>
-                            <li>Attitudes determine whether we respond positively or negatively to people or events, influencing our interactions at work.</li>
-                            <li>Character represents our moral and ethical qualities, such as honesty, responsibility, and respect, which create our overall reputation.</li>
-                        </ul>
+                        <br>
+                        <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm" role="group" aria-label="Personal qualities list">
+                            <ul class="space-y-3 m-0 p-0 list-none">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Values</p>
+                                        <p class="text-sm text-gray-600 mb-0">The core principles that guide our behaviour and influence how we make decisions.</p>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Beliefs</p>
+                                        <p class="text-sm text-gray-600 mb-0">Shape how we view the world and ourselves, affecting the way we approach different situations.</p>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Attitudes</p>
+                                        <p class="text-sm text-gray-600 mb-0">Determine whether we respond positively or negatively to people or events, influencing our interactions at work.</p>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="font-semibold text-gray-800">Character</p>
+                                        <p class="text-sm text-gray-600 mb-0">Represents our moral and ethical qualities—honesty, responsibility, and respect—which create our overall reputation.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                         <br>The lecture helped us see how these qualities work together to build professionalism, influence our behavior, and contribute to success in both personal and professional environments.
                         <br><br> And finally, Lecturer discussed about the importance of Professional Skills in the workplace such as,
-                        <ul class="list-disc ps-5">
-                            <li>Enhaving Employability</li>
-                            <li>Workplace success</li>
-                            <li>Career Advancement</li>
+                        <br><br>
+                        <ul class="list-disc ps-5 lecture-list" style="background: linear-gradient(90deg,#f8fafc,#eef2ff); padding:0.75rem 1rem; border-radius:8px; border-left:4px solid #10b981; box-shadow:0 6px 18px rgba(2,6,23,0.06);">
+                            <li style="color:#065f46; font-weight:600; margin-bottom:.35rem;">Enhancing Employability</li>
+                            <li style="color:#065f46; font-weight:600; margin-bottom:.35rem;">Workplace success</li>
+                            <li style="color:#065f46; font-weight:600; margin-bottom:.35rem;">Career Advancement</li>
                         </ul>
                             <br><br>
                     </p>
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <br>
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
-                    <br>
+                    <p class="card-text">This lecture helps me to explore and understand how professional skills are connected to personal and career development. And the Johari Window activity helps to improve my self awareness by showing my strengths and areas for improvement. This lecture helps me to improve my technical skills and nnuild my personality to become a well-rounded professional.</p>
+
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="flex flex-wrap gap-2 mt-2" role="list" aria-label="Skills learned in this lecture">
+                        <span role="listitem" class="inline-block bg-white border border-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm shadow-sm">Critical thinking</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Leadership</span>
+                        <span role="listitem" class="inline-block bg-white border border-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm shadow-sm">Self-awareness</span>
+                        <span role="listitem" class="inline-block bg-white border border-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm shadow-sm">Adaptability</span>
+                    </div>
                     <br>
                     <p class="card-title font-bold">Activities</p>
                     <div class="mt-2">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal" aria-haspopup="dialog" aria-controls="activitiesModal">
-                            View Activities (Images)
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal-1" aria-haspopup="dialog" aria-controls="activitiesModal-1">
+                             Activity Showcase
                         </button>
                     </div>
 
-                    <div class="modal fade" id="activitiesModal" tabindex="-1" aria-labelledby="activitiesModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="activitiesModal-1" tabindex="-1" aria-labelledby="activitiesModalLabel-1" aria-hidden="true">
                         <style>
-                            #activitiesModal .modal-dialog {
+                            #activitiesModal-1 .modal-dialog {
                                 max-width: 900px;
                             }
-                            #activitiesModal .modal-content {
+                            #activitiesModal-1 .modal-content {
                                 height: 720px;
                             }
-                            #activitiesModal .modal-body {
+                            #activitiesModal-1 .modal-body {
                                 padding: 0;
                                 height: calc(720px - 56px - 56px); 
                                 overflow: hidden;
                             }
-                            #activitiesModal .carousel-inner,
-                            #activitiesModal .carousel-item {
+                            #activitiesModal-1 .carousel-inner,
+                            #activitiesModal-1 .carousel-item {
                                 height: 100%;
                             }
-                            #activitiesModal .carousel-item img {
+                            #activitiesModal-1 .carousel-item img {
                                 width: 100%;
                                 height: 100%;
                                 object-fit: cover;
@@ -238,42 +366,35 @@
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel">Lecture 1 Activities</h5>
+                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel-1">Lecture 1 Activities</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <!-- Carousel to showcase images -->
-                                    <div id="activitiesCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+                                    <div id="activitiesCarousel-1" class="carousel slide h-100" data-bs-ride="carousel" aria-label="Lecture activities carousel">
                                         <div class="carousel-indicators">
-                                            <button type="button" data-bs-target="#activitiesCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#activitiesCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#activitiesCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-1" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
+
                                         <div class="carousel-inner h-100">
                                             <div class="carousel-item active h-100">
-                                                <img src="photos/1709901302504.png" class="d-block w-100 rounded" alt="Activity 1">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <p class="small text-blue-800 bg-gray-100">Activity 1 description (replace with your text)</p>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item h-100">
-                                                <img src="photos/activity2.jpg" class="d-block w-100 rounded" alt="Activity 2">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <p class="small">Activity 2 description</p>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item h-100">
-                                                <img src="photos/activity3.jpg" class="d-block w-100 rounded" alt="Activity 3">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <p class="small">Activity 3 description</p>
+                                                <img src="activities/Johari_Window.png" class="d-block w-100 rounded h-100" alt="Johari Window activity" style="object-fit:cover;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Johari Window</h5>
+                                                        <p class="small mb-0 text-gray-800">Activity to improve self-awareness and feedback skills.</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel" data-bs-slide="prev">
+
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel-1" data-bs-slide="prev" aria-label="Previous slide">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Previous</span>
                                         </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel" data-bs-slide="next">
+                                        <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel-1" data-bs-slide="next" aria-label="Next slide">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Next</span>
                                         </button>
@@ -306,28 +427,87 @@
                     Additionally, we learned how researching the company and job description helps identify keywords that can be included in the CV, increasing its chances of passing automated applicant tracking systems (ATS) and catching the attention of employers.
                     <br><br> And finally we learned about how to avoid common mistakes when tailoring a cv 
                     and what are the essential CV components such as,
-                    <ul class="list-disc ps-5">
-                        <li>Personal Information</li>
-                        <li>Professional SUmmary</li>
-                        <li>Work Experience</li>
-                        <li>Education</li>
-                        <li>Skills</li>
-                        <li>Achievements and Awards</li>
-                    </ul>
+                    <br><br>
+
+                    <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm" role="group" aria-label="CV components">
+                        <ul class="m-0 p-0 grid gap-3 sm:grid-cols-2">
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold grid place-items-center flex-shrink-0">01</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Personal Information</p>
+                                    <p class="text-sm text-gray-600 mb-0">Name, contact number, email, location and professional links (LinkedIn, portfolio).</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-bold grid place-items-center flex-shrink-0">02</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Professional Summary</p>
+                                    <p class="text-sm text-gray-600 mb-0">A concise 2–3 line summary highlighting strengths, experience and career goals.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-yellow-100 text-yellow-700 font-bold grid place-items-center flex-shrink-0">03</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Work Experience</p>
+                                    <p class="text-sm text-gray-600 mb-0">Roles, organisations, dates and 2–4 bullet points of measurable achievements per entry.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-purple-100 text-purple-700 font-bold grid place-items-center flex-shrink-0">04</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Education</p>
+                                    <p class="text-sm text-gray-600 mb-0">Degrees, institutions, graduation years and relevant modules or honours.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-teal-100 text-teal-700 font-bold grid place-items-center flex-shrink-0">05</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Skills</p>
+                                    <p class="text-sm text-gray-600 mb-0">Technical and soft skills (e.g., JavaScript, communication, time management). Prioritise relevant skills for the role.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="w-9 h-9 rounded-full bg-pink-100 text-pink-700 font-bold grid place-items-center flex-shrink-0">06</span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Achievements & Awards</p>
+                                    <p class="text-sm text-gray-600 mb-0">Grants, certifications, notable projects or awards with brief context and dates.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </p>
                     
                     <br>
 
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text">This lecture helps me to improve my CV writing skills, enabling me to create a more effective and tailored CV that can increase my chances of securing job interviews.
+                        And how to present my qualifications and experiences in a way that aligns with the specific requirements of different job roles. This self learning will be valuable for my future job applications and career development.
+                    </p>
 
-                    <br>
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="flex flex-wrap gap-2 mt-2" role="list" aria-label="Skills from CV Writing lecture">
+                        <span role="listitem" class="inline-block bg-white border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm">CV formatting</span>
+                        <span role="listitem" class="inline-block bg-white border border-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm shadow-sm">Tailoring for roles</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Strong action verbs</span>
+                        <span role="listitem" class="inline-block bg-white border border-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm shadow-sm">Quantifying achievements</span>
+                        <span role="listitem" class="inline-block bg-white border border-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm shadow-sm">Professional summary</span>
+                        <span role="listitem" class="inline-block bg-white border border-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm shadow-sm">Keyword research</span>
+                    </div>
+                    
+                    <div class="mt-3 d-flex gap-2 align-items-center" role="group" aria-label="CV actions">
+                        <a class="btn btn-outline-primary" href="files/M.D.M.S. Rodrigo - CV.pdf" target="_blank" rel="noopener" aria-label="Open CV in new tab">
+                            Open CV
+                        </a>
 
-                    <p class="card-title font-bold">Activities</p>
-
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
-                    <br>
+                        <a class="btn btn-success" href="path/to/your-cv.pdf" download="My_CV.pdf" aria-label="Download CV">
+                            Download CV
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -339,18 +519,85 @@
                     <p class="card-text text-body-secondary text-sm">Lecturer: Miss Ishadi Nilaweera</p>
                     
                     <p class="card-title font-bold">What We Learned</p>
-                    <p class="card-text">During the lecture, we learned about the purpose of research and why it plays such an important role in academic and professional work. Research paper is a formal, academic document that represent an in depth analysis of a specific topic based on independent research. We discussed how research helps us explore ideas in depth, solve problems using evidence, support arguments with reliable facts, develop critical thinking, and even contribute new knowledge to a field. The lecturer also explained the formal structure of a research paper and how each section serves a specific purpose. 
-                        <ul class="list-disc ps-5">
-                            <li>Title Page - Reaseach title, author name, institution, date</li>
-                            <li>Abstract - Summary of the entire research.</li>
-                            <li>Introduction - Background, problem statement, and  objectives of the research.</li>
-                            <li>Literature Review - Summarizes past research thories and relevant finidings of the research.</li>
-                            <li>Methodology - How the reseach was done, including examples and tools.</li>
-                            <li>Results - Findings of the reseach.</li>
-                            <li>Discussion - Interprets the results.</li>
-                            <li>Conclusion - Summurize the research, main findings, limitation and future recommendations.</li>
-                            <li>References - List the sources that used using citation format.</li>
-                        </ul>
+                    <p class="card-text">During the lecture, we learned about the purpose of research and why it plays such an important role in academic and professional work. Research paper is a formal, academic document that represent an in depth analysis of a specific topic based on independent research. We discussed how research helps us explore ideas in depth, solve problems using evidence, support arguments with reliable facts, develop critical thinking, and even contribute new knowledge to a field. The lecturer also explained the formal structure of a research paper and how each section serves a specific purpose.
+                        <br><br> 
+                        <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm" role="group" aria-label="Research paper structure">
+                            <h6 class="fw-bold mb-3">Research Paper Structure</h6>
+
+                            <ol class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none m-0 p-0">
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold grid place-items-center flex-shrink-0">1</span>
+                                    <div>
+                                        <div class="font-semibold">Title Page</div>
+                                        <div class="text-sm text-gray-600">Research title, author name, institution, date.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold grid place-items-center flex-shrink-0">2</span>
+                                    <div>
+                                        <div class="font-semibold">Abstract</div>
+                                        <div class="text-sm text-gray-600">Concise summary of the study, methods and main findings.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 font-bold grid place-items-center flex-shrink-0">3</span>
+                                    <div>
+                                        <div class="font-semibold">Introduction</div>
+                                        <div class="text-sm text-gray-600">Background, problem statement and research objectives.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 font-bold grid place-items-center flex-shrink-0">4</span>
+                                    <div>
+                                        <div class="font-semibold">Literature Review</div>
+                                        <div class="text-sm text-gray-600">Summary of prior work, theories and relevant findings.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 font-bold grid place-items-center flex-shrink-0">5</span>
+                                    <div>
+                                        <div class="font-semibold">Methodology</div>
+                                        <div class="text-sm text-gray-600">How the research was conducted, tools and procedures used.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-pink-100 text-pink-700 font-bold grid place-items-center flex-shrink-0">6</span>
+                                    <div>
+                                        <div class="font-semibold">Results</div>
+                                        <div class="text-sm text-gray-600">Presentation of the data and primary findings.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-rose-100 text-rose-700 font-bold grid place-items-center flex-shrink-0">7</span>
+                                    <div>
+                                        <div class="font-semibold">Discussion</div>
+                                        <div class="text-sm text-gray-600">Interpretation of results and their implications.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-slate-100 text-slate-700 font-bold grid place-items-center flex-shrink-0">8</span>
+                                    <div>
+                                        <div class="font-semibold">Conclusion</div>
+                                        <div class="text-sm text-gray-600">Summary of main findings, limitations and recommendations.</div>
+                                    </div>
+                                </li>
+
+                                <li class="flex items-start gap-3 bg-white p-3 rounded-md border">
+                                    <span class="w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-bold grid place-items-center flex-shrink-0">9</span>
+                                    <div>
+                                        <div class="font-semibold">References</div>
+                                        <div class="text-sm text-gray-600">List of sources used, formatted with the chosen citation style.</div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
 
                         <br>
                         Each part helps present the study clearly from introducing the topic and reviewing previous studies to explaining the method, presenting findings, and summarizing the overall contribution. We also learned about the importance of writing a strong abstract, because it provides a quick yet complete summary of the entire research and helps readers decide whether the paper is relevant to them.</p>
@@ -358,14 +605,24 @@
                     <br>
 
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
+                    <p class="card-text">As a university student in the final years of my studies, I am required to conduct my own research and create research papers. This lecture helped me understand how to approach that process effectively. One of the key takeaways was learning how to structure a research paper properly. I also learned about the importance of writing a strong abstract, as it provides a quick and clear summary of the entire research.</p>
+                    
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="flex flex-wrap gap-2 mt-2" role="list" aria-label="Skills from Research lecture">
+                        <span role="listitem" class="inline-block bg-white border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm">Academic research</span>
+                        <span role="listitem" class="inline-block bg-white border border-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm shadow-sm">Literature review</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Citation & referencing</span>
+                        <span role="listitem" class="inline-block bg-white border border-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm shadow-sm">Data analysis</span>
+                        <span role="listitem" class="inline-block bg-white border border-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm shadow-sm">Academic writing</span>
+                    </div>
                     <br>
-
                     <p class="card-title font-bold">Activities</p>
-
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
+                    <p>Activity – Analyzing Research Papers & Writing an AbstractFor the activity,</p>
+                    <ul class="list-decimal m-3">
+                        <li>Refer to sample research papers provided by the lecturer </li>
+                        <li>Identify the structure of each section</li>
+                        <li>Construct an abstract based on the given sample research paper</li>
+                    </ul>
                     <br>
                 </div>
             </div>
@@ -380,36 +637,170 @@
                     <p class="card-title font-bold">What We Learned</p>
                     <p class="card-text">During the lecture, we learned about the basic etiquette required for professional communication, especially when using emails and telephone calls. We were taught that email communication is widely used in academic, business, and workplace environments because it allows information to be shared clearly, professionally, and quickly. 
                         The lecturer explained that understanding the purpose of email communication is important because it helps us choose the right tone, structure, and level of detail depending on the message. And we learned some key rules for writing professional emails, such as:
-                        <ul class="list-disc ps-5">
-                            <li>Include a subject and use the recipients' names and the greetings appropriately.</li>
-                            <li>Don't write in all capital letters.</li>
-                            <li>Don't use email to discuss confidential information.</li>
-                            <li>Don't use abbreviations or slang.</li>
-                            <li>Think before sending the email whether it is relevant or beneficial.</li>
-                            <li>Use proper grammar and punctuation.</li>
-                            <li>Don't forward unnecessary emails.</li>
-                        </ul>
+                       <br><br>
+                            <ul class="list-disc ps-5 m-0" style="background: linear-gradient(90deg,#f8fafc,#eef2ff); padding:0.75rem 1rem; border-radius:8px; border-left:4px solid #10b981; box-shadow:0 6px 18px rgba(2,6,23,0.06);">
+                                <li style="font-weight:600; margin-bottom:.35rem;">Include a subject and use the recipients' names and the greetings appropriately.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Don't write in all capital letters.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Don't use email to discuss confidential information.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Don't use abbreviations or slang.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Think before sending the email whether it is relevant or beneficial.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Use proper grammar and punctuation.</li>
+                                <li style="font-weight:600; margin-bottom:.35rem;">Don't forward unnecessary emails.</li>
+                            </ul>
+                        
                         <br>We also learned about telephone etiquette and how it plays a key role in creating a positive impression.
-                        <ul class="list-disc ps-5">
-                            <li>Turn your ringer off.</li>
-                            <li>Answers important calls only.</li>
-                            <li>Activate voicemail.</li>
-                            <li>Look for a private corner.</li>
-                            <li>Don't bring cellphone to the restroom.</li>
-                            <li>Keep your phone away in the meetings</li>
-                        </ul>
+                        <br><br>
+                        <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm" role="group" aria-label="Phone etiquette list">
+                            <ul class="m-0 p-0 space-y-2">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Turn your ringer off.</span>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Answer important calls only; decline politely if busy.</span>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Activate voicemail with a professional greeting.</span>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Move to a private corner when taking calls.</span>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Avoid bringing your phone into restrooms or shared changing areas.</span>
+                                </li>
+
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-opacity="0.12" stroke-width="2"></circle>
+                                        <path d="M7 13l3 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">Keep phones tucked away and on silent during meetings; use vibrate only if absolutely necessary.</span>
+                                </li>
+                            </ul>
+                        </div>
 
                         <br>And also to answer calls professionally, speak clearly, listen carefully, and remain respectful throughout the conversation. These communication skills are essential in both academic and professional settings, as they help build trust and ensure that messages are understood correctly.</p>
                     <br>
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
+                    <p class="card-text">This lecture helps me to realize how important it is to maintain professionalism in every message, because emails and phone calls often represent who we are before people even meet us. I learned that effective email writing requires clarity, correct formatting, and a polite tone, while good telephone etiquette depends on active listening, patience, and confidence. I also understood that communication mistakes can easily lead to misunderstandings, so being careful and respectful is essential.</p>
                     <br>
 
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="flex flex-wrap gap-2 mt-2" role="list" aria-label="Skills covered in Online and Office Etiquette">
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-green-700 background-white border border-green-100">Email etiquette</span>
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-indigo-700 background-white border border-indigo-100">Professional messaging</span>
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-yellow-700 background-white border border-yellow-100">Telephone etiquette</span>
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-pink-700 background-white border border-pink-100">Clear tone & timing</span>
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-teal-700 background-white border border-teal-100">Confidentiality awareness</span>
+                        <span role="listitem" class="inline-block px-3 py-1 rounded-full text-sm  text-purple-700 background-white border border-purple-100">Meeting punctuality</span>
+                    </div>
+                    <br>
                     <p class="card-title font-bold">Activities</p>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal-2" aria-haspopup="dialog" aria-controls="activitiesModal-2">
+                             Activity Showcase
+                        </button>
+                    </div>
 
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
+                    <div class="modal fade" id="activitiesModal-2" tabindex="-1" aria-labelledby="activitiesModalLabel-2" aria-hidden="true">
+                        <style>
+                            #activitiesModal-2 .modal-dialog {
+                                max-width: 900px;
+                            }
+                            #activitiesModal-2 .modal-content {
+                                height: 720px;
+                            }
+                            #activitiesModal-2 .modal-body {
+                                padding: 0;
+                                height: calc(720px - 56px - 56px); 
+                                overflow: hidden;
+                            }
+                            #activitiesModal-2 .carousel-inner,
+                            #activitiesModal-2 .carousel-item {
+                                height: 100%;
+                            }
+                            #activitiesModal-2 .carousel-item img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        </style>
+
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel-2">Lecture 4 Activities</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Carousel to showcase images -->
+                                    <div id="activitiesCarousel-2" class="carousel slide h-100" data-bs-ride="carousel" aria-label="Lecture activities carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#activitiesCarousel-2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+
+                                        <div class="carousel-inner h-100">
+                                            <div class="carousel-item active h-100">
+                                                <img src="activities/4-1.jpg" class="d-block w-100 rounded h-100" alt="Johari Window activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Proper Messaging</h5>
+                                                        <p class="small mb-0 text-gray-800">The lecturer provided several phrases and asked us to write them in a proper, professional way. </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/4-2.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Writing an Email Scenario</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given a scenario to request missed course material and information via email.</p>
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel-2" data-bs-slide="prev" aria-label="Previous slide">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel-2" data-bs-slide="next" aria-label="Next slide">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -422,20 +813,239 @@
                     <p class="card-text text-body-secondary text-sm">Lecturer: Miss Ishadi Nilaweera</p>
                     
                     <p class="card-title font-bold">What We Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    
+                    <p class="card-text">During the lecture, we learned that meetings are organized gatherings where people come together to discuss information, make decisions, solve problems, or plan future activities. Meetings play an important role in workplaces because they help ensure that everyone is aligned, informed, and able to contribute ideas.</p>
                     <br>
 
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4" role="region" aria-labelledby="meetings-table-title">
+                        <h6 id="meetings-table-title" class="fw-bold mb-3">Advantages & Disadvantages of Meetings</h6>
+
+                        <div class="table-responsive">
+                            <table class="min-w-full table-auto" role="table" aria-describedby="meetings-table-desc">
+                                <caption id="meetings-table-desc" class="sr-only">Two-column comparison table listing common advantages and disadvantages of meetings.</caption>
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Advantages</th>
+                                        <th scope="col" class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Disadvantages</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr class="bg-white">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Clear communication & alignment</strong>
+                                            <div class="text-xs text-gray-600">Share updates, align priorities and ensure everyone understands decisions.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Time cost</strong>
+                                            <div class="text-xs text-gray-600">Poorly planned meetings consume participants' time and reduce productivity.</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-gray-50">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Faster decision making</strong>
+                                            <div class="text-xs text-gray-600">Enables real-time discussion and consensus on complex issues.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Dominance & groupthink</strong>
+                                            <div class="text-xs text-gray-600">Strong personalities can skew outcomes; dissenting views may be suppressed.</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-white">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Collaboration & relationship building</strong>
+                                            <div class="text-xs text-gray-600">Builds trust, clarifies roles and improves team cohesion.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Logistics & coordination overhead</strong>
+                                            <div class="text-xs text-gray-600">Scheduling across time zones and finding venues/tools can be difficult.</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-gray-50">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Problem solving & brainstorming</strong>
+                                            <div class="text-xs text-gray-600">Allows immediate feedback, idea generation and rapid iteration.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Poor preparation reduces value</strong>
+                                            <div class="text-xs text-gray-600">Lack of agenda or objectives leads to unfocused discussion and unclear outcomes.</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-white">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Accountability & visibility</strong>
+                                            <div class="text-xs text-gray-600">Assigns action items and records decisions for follow-up.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Interrupts deep work</strong>
+                                            <div class="text-xs text-gray-600">Frequent meetings fragment concentration and reduce focus time.</div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-gray-50">
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Training & onboarding</strong>
+                                            <div class="text-xs text-gray-600">Efficient way to bring new members up to speed and demonstrate practices.</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-800">
+                                            <strong>Cost to organization</strong>
+                                            <div class="text-xs text-gray-600">Large or frequent meetings can increase labor costs and reduce throughput.</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+
+                    <p class="card-title font-bold">Types of meetings</p>
+                
+                    <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm">
+                        <ul class="space-y-3 m-0 p-0">
+                            <li class="flex items-start gap-3">
+                                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-semibold flex-shrink-0">1</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Annual General Meetings</p>
+                                    <p class="text-sm text-gray-600">A yearly gathering of shareholders to review performance and elect the board.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-100 text-rose-700 font-semibold flex-shrink-0">2</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Extraordinary General Meetings</p>
+                                    <p class="text-sm text-gray-600">Called to address urgent matters that arise between annual meetings.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-semibold flex-shrink-0">3</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Board Meetings</p>
+                                    <p class="text-sm text-gray-600">Regular meetings of directors to oversee strategy, governance and major decisions.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 font-semibold flex-shrink-0">4</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Team Meetings</p>
+                                    <p class="text-sm text-gray-600">Frequent check-ins for progress updates, blockers and short-term planning.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-yellow-100 text-yellow-700 font-semibold flex-shrink-0">5</span>
+                                <div>
+                                    <p class="font-semibold text-gray-800">Project Meetings</p>
+                                    <p class="text-sm text-gray-600">Focused sessions to track milestones, resolve issues and coordinate deliverables.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <p class="card-text">Another key point we learned was how to plan a meeting effectively. Proper planning involves identifying the purpose, preparing an agenda, selecting participants, deciding on the time and place, and ensuring all necessary materials are ready.</p>
+                    <br>
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text">This lecture give me an idea about the importance of meetings and how different types of meetings serve different purposes. And during a meeting how to effectively communicate and collaborate with others to solve conflicts and set objectives to make the meeting is a productive meeting.</p>
 
                     <br>
 
                     <p class="card-title font-bold">Activities</p>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal-3" aria-haspopup="dialog" aria-controls="activitiesModal-3">
+                             Activity Showcase
+                        </button>
+                    </div>
 
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
-                    <br>
+                    <div class="modal fade" id="activitiesModal-3" tabindex="-1" aria-labelledby="activitiesModalLabel-3" aria-hidden="true">
+                        <style>
+                            #activitiesModal-3 .modal-dialog {
+                                max-width: 900px;
+                            }
+                            #activitiesModal-3 .modal-content {
+                                height: 720px;
+                            }
+                            #activitiesModal-3 .modal-body {
+                                padding: 0;
+                                height: calc(720px - 56px - 56px); 
+                                overflow: hidden;
+                            }
+                            #activitiesModal-3 .carousel-inner,
+                            #activitiesModal-3 .carousel-item {
+                                height: 100%;
+                            }
+                            #activitiesModal-3 .carousel-item img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        </style>
+
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel-3">Lecture 5 Activities</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Carousel to showcase images -->
+                                    <div id="activitiesCarousel-3" class="carousel slide h-100" data-bs-ride="carousel" aria-label="Lecture activities carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#activitiesCarousel-3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-3" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-3" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+
+                                        <div class="carousel-inner h-100">
+                                            <div class="carousel-item active h-100">
+                                                <img src="activities/5-1.jpg" class="d-block w-100 rounded h-100" alt="Johari Window activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Difference between EGM & AGM</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given to write the difference of EGM and AGM.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/5-2.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Advantages of EGM</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given to write the advantages of EGM.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/5-3.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Meaning of the words</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given word list and we had to write the meanings of the words.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel-3" data-bs-slide="prev" aria-label="Previous slide">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel-3" data-bs-slide="next" aria-label="Next slide">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -502,24 +1112,123 @@
                     <br>
 
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
+                    <p class="card-text">In this lecture I learned about the importance of structured proposal writing and how it enhances communication and increases the likelihood of gaining approval for projects.
+                        I learned the key components of both external and internal proposals, including the executive summary, management section, and financial section for external proposals, as well as the importance of understanding the audience for internal proposals.
+                    </p>
                     <br>
 
                     <p class="card-title font-bold">Activities</p>
 
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
-                    <br>
-                </div>
-            </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal-4" aria-haspopup="dialog" aria-controls="activitiesModal-4">
+                             Activity Showcase
+                        </button>
+                    </div>
 
+                    <div class="modal fade" id="activitiesModal-4" tabindex="-1" aria-labelledby="activitiesModalLabel-4" aria-hidden="true">
+                        <style>
+                            #activitiesModal-4 .modal-dialog {
+                                max-width: 900px;
+                            }
+                            #activitiesModal-4 .modal-content {
+                                height: 720px;
+                            }
+                            #activitiesModal-4 .modal-body {
+                                padding: 0;
+                                height: calc(720px - 56px - 56px); 
+                                overflow: hidden;
+                            }
+                            #activitiesModal-4 .carousel-inner,
+                            #activitiesModal-4 .carousel-item {
+                                height: 100%;
+                            }
+                            #activitiesModal-4 .carousel-item img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        </style>
+
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel-4">Lecture 6 Activities</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Carousel to showcase images -->
+                                    <div id="activitiesCarousel-4" class="carousel slide h-100" data-bs-ride="carousel" aria-label="Lecture activities carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#activitiesCarousel-4" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-4" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-4" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+
+                                        <div class="carousel-inner h-100">
+                                            <div class="carousel-item active h-100">
+                                                <img src="activities/6-1.jpg" class="d-block w-100 rounded h-100" alt="Johari Window activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Identifying Proposal Type</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given various project scenarios and asked to determine whether they required an internal or external proposal.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/6-2.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Writing an Executive Summary</h5>
+                                                        <p class="small mb-0 text-gray-800">We practiced writing a concise executive summary based on a given scenario.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/6-3.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Writing the Management Section</h5>
+                                                        <p class="small mb-0 text-gray-800">Using a scenario, we wrote the management section of a proposal, </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/6-4.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Problem and Solution</h5>
+                                                        <p class="small mb-0 text-gray-800">We were given a scenario and asked to identify the problem, propose a solution, and describe how it would be implemented. </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel-4" data-bs-slide="prev" aria-label="Previous slide">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel-4" data-bs-slide="next" aria-label="Next slide">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <br>
+                    </div>
+            </div>
+            </div>
             <!--card 7 -->
             <div class="card mb-3 rounded-xl shadow">
                 <img src="photos/imotional.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title text-xl fw-bold">Lecture 7 - Emotional Intelligence</h5>
-                    <p class="card-text"><small class="text-body-secondary">Lecturer: </small></p>
+                    <p class="card-text"><small class="text-body-secondary">Lecturer: Ms. Hubika Joshi</small></p>
                     
                     <p class="card-title font-bold">What We Learned</p>
                     <p class="card-text">In this lecture, we learned about Emotional Intelligence (EI) and how it plays an important role in both personal and professional life. We discussed that emotional intelligence refers to the ability to understand, manage, and express our emotions effectively while also recognizing and responding to the emotions of others. 
@@ -607,14 +1316,101 @@
                     <br>
 
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
+                    <p class="card-text">This lecture helps me to understand my emotions and how important emotional intelligence is in everyday interactions and decision making. Being aware of how my emotions affect my behavior and learning to manage them in a healthy way. Also learned how social skills can improve the teamwork and communication in professional environment.</p>
                     <br>
 
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="mt-3" role="list" aria-label="Emotional intelligence skills">
+                        <span role="listitem" class="inline-block bg-white border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm">Self-awareness</span>
+                        <span role="listitem" class="inline-block bg-white border border-green-100 text-green-700 px-3 py-1 rounded-full text-sm shadow-sm">Self-regulation</span>
+                        <span role="listitem" class="inline-block bg-white border border-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm shadow-sm">Empathy</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Social skills</span>
+                        <span role="listitem" class="inline-block bg-white border border-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm shadow-sm">Motivation</span>
+                    </div>
+                    <br>
                     <p class="card-title font-bold">Activities</p>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activitiesModal-5" aria-haspopup="dialog" aria-controls="activitiesModal-5">
+                             Activity Showcase
+                        </button>
+                    </div>
 
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
+                    <div class="modal fade" id="activitiesModal-5" tabindex="-1" aria-labelledby="activitiesModalLabel-5" aria-hidden="true">
+                        <style>
+                            #activitiesModal-5 .modal-dialog {
+                                max-width: 900px;
+                            }
+                            #activitiesModal-5 .modal-content {
+                                height: 720px;
+                            }
+                            #activitiesModal-5 .modal-body {
+                                padding: 0;
+                                height: calc(720px - 56px - 56px); 
+                                overflow: hidden;
+                            }
+                            #activitiesModal-5 .carousel-inner,
+                            #activitiesModal-5 .carousel-item {
+                                height: 100%;
+                            }
+                            #activitiesModal-5 .carousel-item img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        </style>
+
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fw-bold" id="activitiesModalLabel-5">Lecture 7 Activities</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Carousel to showcase images -->
+                                    <div id="activitiesCarousel-5" class="carousel slide h-100" data-bs-ride="carousel" aria-label="Lecture activities carousel">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#activitiesCarousel-5" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-5" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#activitiesCarousel-5" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+
+                                        <div class="carousel-inner h-100">
+                                            <div class="carousel-item active h-100">
+                                                <img src="activities/7-1.jpg" class="d-block w-100 rounded h-100" alt="Johari Window activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Favorite Emotions and Worst Feeling</h5>
+                                                        <p class="small mb-0 text-gray-800">We were asked to identify our favorite emotions and explain what's worst feeling.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="activities/7-2.jpg" class="d-block w-100 rounded h-100" alt="Email etiquette activity" style="object-fit:contain;">
+                                                <div class="carousel-caption d-none d-md-block text-start">
+                                                    <div style="background: rgba(255,255,255,0.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding:0.75rem 1rem; border-radius:8px; display:inline-block;">
+                                                        <h5 class="fw-bold text-gray-800">Favorite Emotions & Triggers</h5>
+                                                        <p class="small mb-0 text-gray-800">The lecturer asked us to write a short essay comparing Artificial Intelligence (AI) with Emotional Intelligence (EI).</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#activitiesCarousel-5" data-bs-slide="prev" aria-label="Previous slide">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#activitiesCarousel-5" data-bs-slide="next" aria-label="Next slide">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <br>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -633,9 +1429,9 @@
                         <h3 class="text-center fw-bold mb-2">SURVIVAL ACTIVITY: "Blizzard at Basecamp"</h3>
 
                         <p><strong>Scenario:</strong> <br>Your corporate team was selected for a winter leadership retreat in the Himalayas. While at basecamp, an unexpected blizzard hits, cutting off all communication and access to help. Decide which 8 of the 16 available items to take with you to survive and maintain team morale, safety, and functionality for at least 3 days. Every decision must be justified from a professional and practical standpoint (leadership, teamwork, safety, communication, adaptability).</p>
-<br>
+                        <br>
                         <hr class="my-2">
-<br>
+                        <br>
                         <p class="fw-semibold mb-1">Skills focus on:</p>
                         <ul class="list-disc ps-4 mb-3">
                             <li>Leadership under pressure</li>
@@ -646,7 +1442,7 @@
                         </ul>
                         <br>
                         <hr class="my-2">
-<br>
+                        <br>
                         <p class="fw-semibold mb-1">Group instructions:</p>
                         <ol class="ps-4 mb-3 list-decimal">
                             <li>Form groups of 4-6 students.</li>
@@ -662,7 +1458,7 @@
                             <li>Appoint roles: Team Leader, Recorder, Timekeeper, Presenter, etc.</li>
                             <li>Present your team's decision to the class if time permits.</li>
                         </ol>
-<br>
+                        <br>
                         <div class="mt-2">
                             <p class="fw-semibold mb-1">Item List (Choose 8):</p>
                             <ol class="ps-4 mb-0 list-decimal columns-1 sm:columns-2 gap-4 space-y-2">
@@ -926,8 +1722,8 @@
                         <img src="photos/group.jpg" alt="Group photo" class="group-photo" id="groupPhotoImg">
 
 
-                        <button class="role-badge top-left" data-layout="manual" aria-label="Maya — Team Lead">Maya — Supporter</button>
-                        <button class="role-badge top-right" data-layout="manual" aria-label="Ravi — Deputy Lead">Ravi — Researcher</button>
+                        <button class="role-badge top-left" data-layout="manual" aria-label="Maya — Team Lead">Inuli — Supporter</button>
+                        <button class="role-badge top-right" data-layout="manual" aria-label="Ravi — Deputy Lead">Chamodi — Researcher</button>
 
                         
                         <button class="role-badge mid-left" data-layout="manual" aria-label="Sita — Research">Feroza — Presenter</button>
@@ -1011,18 +1807,327 @@
                     <br>
 
                     <p class="card-title font-bold">What I Learned</p>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text">During this activity I learned how to work as a group leader. How to separte tasks among the group members effectively complete the task. This experience helped me develop better communication, organizational skills, collaboration, and problem-solving abilities.
+                        This shows these skills matter not only in the classroom but also in real-world situations where teamwork and leadership are essential for success.
+                    </p>
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="mt-3" role="list" aria-label="Emotional intelligence skills">
+                        <span role="listitem" class="inline-block bg-white border border-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm shadow-sm">Leadership</span>
+                        <span role="listitem" class="inline-block bg-white border border-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm shadow-sm">Decision-making</span>
+                        <span role="listitem" class="inline-block bg-white border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm">Teamwork</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Communication</span>
+                        <span role="listitem" class="inline-block bg-white border border-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm shadow-sm">Problem-solving</span>
+                        <span role="listitem" class="inline-block bg-white border border-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm shadow-sm">Adaptability</span>
+                        <span role="listitem" class="inline-block bg-white border border-lime-100 text-lime-700 px-3 py-1 rounded-full text-sm shadow-sm">Resource management</span>
+                    </div>
 
-                    <br>
-
-                    <p class="card-title font-bold">Activities</p>
-
-                    <span class="badge border border-success text-success colo">Added in v5.2.0</span>
-                    <span class="badge border border-primary text-primary">New</span>
-                    <br>
                 </div>
             </div>
 
+
+            <!-- Group Project: Food Stall -->
+            <div class="card mb-3 rounded-xl shadow">
+                <img src="photos/foodstall/g1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title text-3xl fw-bold text-center">Group Project — Food Stall</h5><br>
+
+                    <p class="card-title font-bold text-center">Story of the  Rasasaraniya Food Stall</p>
+                    <p class="card-text text-center">
+                        Our team decided to operate a small food stall to practice planning, teamwork and customer service.
+                        The project included menu selection, budgeting, marketing, stall layout, role allocation and a one day pop-up sale on campus.
+                        We aimed to create a low-cost, high-margin menu item and deliver consistent service while learning real-world constraints.
+                    </p>
+
+                    <div class="mt-4">
+                        <h3 class="text-lg font-bold mb-2 text-center">Team Members</h3>
+
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 m-0 p-0 list-none">
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">M</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">M.D.M.S. Rodrigo</div>
+                                    <div class="text-xs text-gray-500">SA24610189</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">S</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">S.T. Madanasinghe</div>
+                                    <div class="text-xs text-gray-500">SA24610179</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">W</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">W.B.D.D. Wijesingha</div>
+                                    <div class="text-xs text-gray-500">SA24610141</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">M</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">M.M.C.H. Mapa</div>
+                                    <div class="text-xs text-gray-500">SA24610037</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">S</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">S.B. Wickramaarachchi</div>
+                                    <div class="text-xs text-gray-500">SA24610042</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">I</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">I.H. Gunasekara</div>
+                                    <div class="text-xs text-gray-500">SA24610044</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">H</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">H.N.P.G. Fernando</div>
+                                    <div class="text-xs text-gray-500">SA24610017</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">S</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">S.D. Ranaweera</div>
+                                    <div class="text-xs text-gray-500">SA24610083</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">S</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">S.S. Kumarasinghe</div>
+                                    <div class="text-xs text-gray-500">SA24610147</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">H</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">H.K.N.N. Karunarathne</div>
+                                    <div class="text-xs text-gray-500">SA24610101</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">M</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">M.K.A.U. Perera</div>
+                                    <div class="text-xs text-gray-500">SA24610205</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">P</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">P.H.M. Bimsara</div>
+                                    <div class="text-xs text-gray-500">SA24610080</div>
+                                </div>
+                            </li>
+
+                            <li class="flex items-center gap-3 p-3 bg-white border rounded-lg shadow-sm">
+                                <span class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-semibold">W</span>
+                                <div>
+                                    <div class="font-medium text-gray-800">W.K.C. Thayodh</div>
+                                    <div class="text-xs text-gray-500">SA24610201</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <br>
+                    
+                    <p class="card-title font-bold inline-flex items-center gap-2" aria-label="Objectives">
+                        <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.2" opacity="0.85"/>
+                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                            <path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                        </svg>
+                        Objectives
+                    </p>
+                    <div class="bg-gradient-to-r from-white to-blue-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm" role="group" aria-label="Project objectives">
+                        <ul class="m-0 p-0 space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center" aria-hidden="true">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Plan a simple menu that balances cost and taste</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center" aria-hidden="true">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Manage a small budget and track expenses/revenue</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center" aria-hidden="true">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Practice team roles and customer interaction</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center" aria-hidden="true">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6L9 17l-5-5"></path>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <p class="mb-0 font-semibold text-gray-800">Learn basic marketing and on‑site operations</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <!-- Two planning images -->
+                         <p class="card-title font-bold text-3xl text-center" >Planning Phase</p>
+                        <div class="d-flex gap-3 flex-column flex-md-row align-items-stretch justify-content-center">
+                            <figure class="mb-0 text-center" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/1.jpg" alt="Food stall layout sketch"
+                                     class="img-fluid rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Report/Plans Creating</figcaption>
+                            </figure>
+                        </div>
+                       <p class="card-text">Start of the planning phase for the food stall we created our first documents to get permission from the lecturer. After that team members started to gather and discuss about the food menu.
+                        After finalizing the menu we created a budget plan to manage our expenses. Then we divided the tasks among the team members to ensure smooth operation during the preparation days.
+                       </p>
+
+                       <p class="card-title font-bold text-3xl text-center">Initial Start</p><br>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/2.jpg" alt="Final menu image 1"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Final Menu Design</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/3.jpg" alt="Final menu image 2"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Grocery Shopping</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/4.jpg" alt="Final menu image 3"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Grocery Shopping</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/5.jpg" alt="Final menu image 4"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Grocery Shopping</figcaption>
+                            </figure>
+                        </div>
+                        <br>
+                        <p class="card-text">Shared our final menu among the university groups. After that, The group that was appointed to buy groceries purchased all the groceries and necessary items.</p>
+                        <br>
+                        <p class="card-title font-bold text-3xl text-center">Food Fest Day</p><br>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/prep1.jpg" alt="Final menu image 1"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Cupcake preparation</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/prep2.jpg" alt="Final menu image 2"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Biscuit Pudding preparation</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/prep3.jpg" alt="Final menu image 3"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Bread Pizza Preparation</figcaption>
+                            </figure>
+
+                            <figure class="mb-0 text-center mx-auto" style="max-width:360px; width:100%;">
+                                <img src="photos/foodstall/prep4.jpg" alt="Final menu image 4"
+                                         class="rounded shadow-sm mx-auto d-block"
+                                         style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <figcaption class="text-center text-muted small mt-2">Drinks Preparation</figcaption>
+                            </figure>
+                        </div>
+                        <br>
+                        
+                        <p class="card-text">Our food stall started on October 1st at 12.30 PM. We decided to prepare the food in the morning so we could serve it fresh. 
+                            However, we faced a delay because the food preparation took longer than expected, which caused us to arrive at the university around 1 PM. This resulted in having fewer customers at the start. Despite this setback, we worked under pressure, managed to finalize everything on time, and successfully sold all our food and drinks</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 my-3">
+                                <img src="photos/foodstall/g1.jpg" alt="Food stall image 6"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <img src="photos/foodstall/g2.jpg" alt="Food stall image 7"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <img src="photos/foodstall/g3.jpg" alt="Food stall image 8"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <img src="photos/foodstall/g4.jpg" alt="Food stall image 9"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <img src="photos/foodstall/g5.jpg" alt="Food stall image 10"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                                <img src="photos/foodstall/g6.jpg" alt="Food stall image 11"
+                                     class="rounded shadow-sm mx-auto d-block"
+                                     style="height:220px; object-fit:cover; width:100%; max-width:360px;">
+                            </div>
+                    </div>
+
+                    <p class="card-title font-bold mt-3 text-center">What I Learned</p>
+                    <p class="card-text">
+                        From this experience, I learned the importance of proper time management, early preparation, and teamwork when handling tasks under pressure. It also taught me how to adapt quickly to unexpected situations and still deliver successful results.
+                    </p>
+
+                    <p class="card-title font-bold mt-3">Skills Covered</p>
+                    <div class="flex flex-wrap gap-2 mt-2" role="list" aria-label="Skills from Food Stall project">
+                        <span role="listitem" class="inline-block bg-white border border-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm shadow-sm">Budgeting</span>
+                        <span role="listitem" class="inline-block bg-white border border-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm shadow-sm">Teamwork</span>
+                        <span role="listitem" class="inline-block bg-white border border-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm shadow-sm">Customer Service</span>
+                        <span role="listitem" class="inline-block bg-white border border-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm shadow-sm">Operations</span>
+                        <span role="listitem" class="inline-block bg-white border border-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow-sm">Marketing</span>
+                        <span role="listitem" class="inline-block bg-white border border-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm shadow-sm">Problem-solving</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
